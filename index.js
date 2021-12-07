@@ -34,7 +34,7 @@ let btnCases = document.getElementById('btnCases');
 let casesWrapper = document.getElementById('casesWrapper');
 let tasks;
 let completeTaskAll;
-let сompletedCases = document.getElementById('сompletedCases');
+let completedCasesAll = document.getElementById('completedCases');
 
 //!localStorage.tasks ? tasks=[]:tasks=JSON.parse(localStorage.getItem('tasks'));
 
@@ -44,6 +44,19 @@ if (!localStorage.tasks)
          } else
 {   tasks=JSON.parse(localStorage.getItem('tasks')); }
     console.log(tasks);
+
+for (var completed in tasks) {
+    if (tasks.completed) {
+        console.log(tasks.completed);
+       // completeTaskAll[index].classList.add('checkout');
+       // fillHtmlList();
+    }
+    else {
+        console.log(tasks.completed);
+
+    }
+}
+
 
 //Функция создает Дело
 function Task(description) {
@@ -95,11 +108,12 @@ let fillHtmlList=()=> {
     casesWrapper.innerHTML= " ";
     if (tasks.length>0) {
         tasks.forEach((item,index)=> {
+            console.log(tasks,item,index);
             casesWrapper.innerHTML+=createTemplate(item,index);
-            //console.log(item);
+
         });
         completeTaskAll=document.querySelectorAll('.task');
-
+        //console.log( completeTaskAll);
     }
 
 
