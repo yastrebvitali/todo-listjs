@@ -39,23 +39,12 @@ let completedCasesAll = document.getElementById('completedCases');
 //!localStorage.tasks ? tasks=[]:tasks=JSON.parse(localStorage.getItem('tasks'));
 
 
-if (!localStorage.tasks)
-    {   tasks=[];
-         } else
-{   tasks=JSON.parse(localStorage.getItem('tasks')); }
-    console.log(tasks);
-
-for (var completed in tasks) {
-    if (tasks.completed) {
-        console.log(tasks.completed);
-       // completeTaskAll[index].classList.add('checkout');
-       // fillHtmlList();
-    }
-    else {
-        console.log(tasks.completed);
-
-    }
+if (!localStorage.tasks) {
+    tasks = [];
+} else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
 }
+//console.log(tasks);
 
 
 //Функция создает Дело
@@ -65,17 +54,13 @@ function Task(description) {
 }
 
 // Функия добавляет класс checkout
-const completeTask=index=> {
-    tasks[index].completed=!tasks[index].completed;
-
-    if ( tasks[index].completed)
-      {
-          LocalStore();
-         /* console.log(tasks);*/
-
-         // console.log( tasks[index].completed);
+const completeTask = index => {
+    tasks[index].completed = !tasks[index].completed;
+    if (tasks[index].completed) {
+        LocalStore();
+        /* console.log(tasks);*/
+        // console.log( tasks[index].completed);
         completeTaskAll[index].classList.add('checkout');
-
     } else {
         //tasks[index].completed=true;
         completeTaskAll[index].classList.remove('checkout');
@@ -86,33 +71,35 @@ const completeTask=index=> {
 };
 
 
-        //Создаем шаблон
-let createTemplate=(tasks,index)=> {
-return `<div class="task">
-        <div>${tasks.description} </div>
-        <input onclick="completeTask(${index})" type="checkbox" >
-      <button class="btn" id="btnDelete">Удалить</button>
-    </div> `;
+//Создаем шаблон
+let createTemplate = (tasks, index) => {
+    return `<div class="task">
+          <div>${tasks.description} </div>
+          <input onclick="completeTask(${index})" type="checkbox" >
+          <button class="btn" id="btnDelete">Удалить</button>
+        </div>`;
 };
 
 // Функция помещает Tasks(задание)в Localstore
 function LocalStore() {
-
     localStorage.setItem('tasks', JSON.stringify(tasks))
-
 }
 
 
 // фУНКЦИЯ (fill)заполняет Tasks(задание ) в html
-let fillHtmlList=()=> {
-    casesWrapper.innerHTML= " ";
-    if (tasks.length>0) {
-        tasks.forEach((item,index)=> {
-            console.log(tasks,item,index);
-            casesWrapper.innerHTML+=createTemplate(item,index);
+let fillHtmlList = () => {
+    casesWrapper.innerHTML = " ";
+    if (tasks.length > 0) {
+        tasks.forEach((item, index) => {
+            //console.log(tasks,item,index);
+            if  (item.completed) {
+                console.log(completeTask);
+            }
+
+            casesWrapper.innerHTML += createTemplate(item, index);
 
         });
-        completeTaskAll=document.querySelectorAll('.task');
+        completeTaskAll = document.querySelectorAll('.task');
         //console.log( completeTaskAll);
     }
 
