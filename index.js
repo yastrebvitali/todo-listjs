@@ -34,7 +34,7 @@ let btnCases = document.getElementById('btnCases');
 let casesWrapper = document.getElementById('casesWrapper');
 let tasks;
 let completeTaskAll;
-let completedCasesAll = document.getElementById('completedCases');
+//let completeCasesAll = document.getElementById('completedCases');
 
 //!localStorage.tasks ? tasks=[]:tasks=JSON.parse(localStorage.getItem('tasks'));
 
@@ -43,6 +43,7 @@ if (!localStorage.tasks) {
     tasks = [];
 } else {
     tasks = JSON.parse(localStorage.getItem('tasks'));
+
 }
 //console.log(tasks);
 
@@ -55,27 +56,29 @@ function Task(description) {
 
 // Функия добавляет класс checkout
 const completeTask = index => {
-    tasks[index].completed = !tasks[index].completed;
-    if (tasks[index].completed) {
+
+    tasks[index].completed=!tasks[index].completed;
+      if (tasks[index].completed) {
         LocalStore();
-        /* console.log(tasks);*/
+                /* console.log(tasks);*/
         // console.log( tasks[index].completed);
         completeTaskAll[index].classList.add('checkout');
     } else {
         //tasks[index].completed=true;
         completeTaskAll[index].classList.remove('checkout');
-        fillHtmlList();
-        LocalStore();
+       LocalStore();
+       // fillHtmlList();
+
         /*console.log(tasks);*/
     }
 };
 
 
-//Создаем шаблон
+//Создаем шаблон вставляем из массива таск
 let createTemplate = (tasks, index) => {
-    return `<div class="task">
+    return `<div class="task ${tasks.completed ? 'checkout':''} " > 
           <div>${tasks.description} </div>
-          <input onclick="completeTask(${index})" type="checkbox" >
+          <input onclick="completeTask(${index})" type="checkbox" ${tasks.completed?'checked="checked"':''}>
           <button class="btn" id="btnDelete">Удалить</button>
         </div>`;
 };
@@ -91,10 +94,6 @@ let fillHtmlList = () => {
     casesWrapper.innerHTML = " ";
     if (tasks.length > 0) {
         tasks.forEach((item, index) => {
-            //console.log(tasks,item,index);
-            if  (item.completed) {
-                console.log(completeTask);
-            }
 
             casesWrapper.innerHTML += createTemplate(item, index);
 
